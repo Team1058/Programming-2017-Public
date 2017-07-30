@@ -42,7 +42,7 @@ public class DriveStraightPosition extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	
-    	Robot.drivebase.driveTank(-kMaxSpeedFps+Robot.drivebase.driveGyro.getAngle(), -kMaxSpeedFps-Robot.drivebase.driveGyro.getAngle());
+    	Robot.drivebase.driveTank(-kMaxSpeedFps+Robot.drivebase.driveGyro.getAngle()/5, -kMaxSpeedFps-Robot.drivebase.driveGyro.getAngle()/5);
     	
     	//Robot.drivebase.driveTank(-kMaxSpeedFps, -kMaxSpeedFps);
     	if(-Robot.drivebase.leftDrive1.getPosition() < (kPosition+RobotMap.DRIVEBASE_POSITION_TOLERANCE)

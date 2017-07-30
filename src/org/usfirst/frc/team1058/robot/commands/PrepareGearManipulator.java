@@ -28,10 +28,10 @@ public class PrepareGearManipulator extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
     	addSequential(new DriveGearPivot(RobotMap.INTAKE_PIVOT_GEARINTAKE_POSITION-400, 7),0.8);
-    	addSequential(new DriveGearRoller(-0.45), 0.6);
+    	addSequential(new DriveGearRoller(-0.45), 0.5);
     	addSequential(new DriveGearRoller(0),0.01);
-    	addSequential(new DriveGearPivot(RobotMap.INTAKE_PIVOT_GEARINTAKE_POSITION-100, 7), 0.5);
-    	addParallel(new DriveStraightPosition(3, 3));
+    	addSequential(new DriveGearPivot(RobotMap.INTAKE_PIVOT_GEARINTAKE_POSITION, 7), 0.5);
+    	addParallel(new DriveStraightPosition(3, 3.5));
     	addSequential(new DriveGearRoller(1), 1);
     	addSequential(new DriveGearRoller(0),0.01);
     	addSequential(new WaitCommand(0.2));

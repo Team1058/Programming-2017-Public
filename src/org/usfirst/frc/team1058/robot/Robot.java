@@ -3,13 +3,14 @@ package org.usfirst.frc.team1058.robot;
 
 import org.opencv.core.Mat;
 import org.usfirst.frc.team1058.robot.commands.BoilerAuto;
+import org.usfirst.frc.team1058.robot.commands.CalibrateGyro;
 import org.usfirst.frc.team1058.robot.commands.DriveStraightCenter;
+import org.usfirst.frc.team1058.robot.commands.DriveStraightSide;
+import org.usfirst.frc.team1058.robot.commands.DriveTimedTank;
 import org.usfirst.frc.team1058.robot.commands.DriveToLeftRightFace;
-import org.usfirst.frc.team1058.robot.commands.GoAndReturn;
-import org.usfirst.frc.team1058.robot.commands.PlaceGear;
 import org.usfirst.frc.team1058.robot.commands.PrepareGearManipulator;
-import org.usfirst.frc.team1058.robot.commands.SetCycloneSpeed;
 import org.usfirst.frc.team1058.robot.commands.TurnTillPerpVision;
+import org.usfirst.frc.team1058.robot.commands.ZeroGyro;
 import org.usfirst.frc.team1058.robot.subsystems.CameraTurret;
 import org.usfirst.frc.team1058.robot.subsystems.Climber;
 import org.usfirst.frc.team1058.robot.subsystems.Cyclone;
@@ -19,12 +20,10 @@ import org.usfirst.frc.team1058.robot.subsystems.LEDs;
 import org.usfirst.frc.team1058.robot.subsystems.Shooter;
 import org.usfirst.frc.team1058.robot.subsystems.VisionNetworkTable;
 
+import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.RobotDrive;
-import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -48,7 +47,8 @@ public class Robot extends IterativeRobot {
 	private VisionThread visionThread;
 	private double centerX = 0.0;
 	private double centerY = 0.0;
-	byte numToSend;
+	public static byte numToSend;
+	byte prevnumToSend;
 
 	private RobotDrive drive;
 	public static boolean debugging = false;
@@ -67,6 +67,7 @@ public class Robot extends IterativeRobot {
 	public static boolean isAutonomous = false;
 	public static boolean isEnabled = false;
 	public static boolean isTeleoperated = false;
+	public static boolean ledStateChanged;
 	String dfile;
 	String ofile;
 	Mat goaloutputmat;
@@ -86,28 +87,33 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		oi = new OI();
-		drivebase.driveGyro.calibrate();
-
+		drivebase.calibrateGyro();
+		SmartDashboard.putData("Zero Gyro", new ZeroGyro());
+		SmartDashboard.putData("Calibrate Gyro - WHILE ROBOT NOT MOVING", new CalibrateGyro());
 		chooser.addDefault("Default Prepare Gear Auto", new PrepareGearManipulator());
 		//shooterModeChooser.addDefault("Shooter at Nominal Preset when Pressed", object);
 		/*chooser.addObject("Left Gear Auto", new LeftGearGroup());
 		chooser.addObject("Center Gear Auto", new CenterGearGroup());*/
 	//	chooser.addObject("Test Vision Auto", new TurnTillPerpVision(true));
 	//	chooser.addObject("Testing turn gyro", new RotateToGyroAngle(90,4));
-		chooser.addObject("DriveStraightTest", new GoAndReturn());
+		//chooser.addObject("DriveStraightTest", new GoAndReturn());
 		 //UNNECESSARY AUTOS FOR TESTING ^
 		chooser.addObject("Center Gear Encoder Auto (place)", new DriveStraightCenter());
 		chooser.addObject("Vision center TESTING!!!", new TurnTillPerpVision());
 		chooser.addObject("Boiler Auto RED", new BoilerAuto(true));
 		chooser.addObject("Boiler Auto BLUE", new BoilerAuto(false));
-
+																				
 	//	chooser.addObject("Center Gear Encoder Auto (do not place )", new DriveToFace(false, false, false));
-		chooser.addObject("Side Gear Auto (do not place)", new DriveToLeftRightFace(false,false,false,false));
+		chooser.addObject("Baseline", new DriveToLeftRightFace(false,false,false,false));
+		chooser.addObject("TEST DRIVETANK AUTO", new DriveTimedTank(0.7,0.7,5));
+		chooser.addObject("Side Gear Auto RIGHT (manual straight lineup)(place)(TURN AFTER AND START CYCLE)", new DriveStraightSide(true,false));
+
+		chooser.addObject("Side Gear Auto LEFT (manual straight lineup)(place)(TURN AFTER AND START CYCLE)", new DriveStraightSide(true,true));
 		//chooser.addObject("Side Gear Auto (place)", new DriveToLeftRightFace(true,false,false,false));
 		//chooser.addObject("Test DriveStraight Auto", new DriveStraightPosition(10,5));
 		//chooser.addObject("Center Gear Encoder Auto (place)", new DriveStraightCenter());
 		/*InterpreterGroup  interp = new InterpreterGroup();
-		if(interp.init()){
+		(interp.init()){
 			chooser.addObject("Interpreter",interp);
 		}*/
 		// chooser.addObject("My Auto", new MyAutoCommand());
@@ -118,11 +124,13 @@ public class Robot extends IterativeRobot {
     	
 		
     	Robot.leds.initializei2cBus();
-    	Timer.delay(3);
+    	byte mode = 0;
+    	Robot.leds.setMode(mode);
     	gearcamera = CameraServer.getInstance();
-
-		gearcamera.startAutomaticCapture();
-
+		
+    	UsbCamera gearUsb = gearcamera.startAutomaticCapture();
+    	gearUsb.setFPS(25);
+    	gearUsb.setResolution(256, 144);
 
 		//NetworkTable.setClientMode();
     	//NetworkTable.setIPAddress("raspberrypi.local");
@@ -164,17 +172,18 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void disabledInit() {
-
-
 	}
 
 	@Override
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
 		isAutonomous = false;
+	
 		isTeleoperated = false;
 		isEnabled = false;
 		updateLedState();
+		SmartDashboard.putNumber("Gyro", Robot.drivebase.driveGyro.getAngle());
+
 	}
 
 	/**
@@ -196,6 +205,9 @@ public class Robot extends IterativeRobot {
 		isAutonomous = true;
 		isTeleoperated = false;
 		isEnabled = true;
+		Robot.numToSend = 3;
+		drivebase.resetGyro();
+
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
 		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
@@ -223,6 +235,8 @@ public class Robot extends IterativeRobot {
 		isEnabled = true;
 		visionNetworkTable.getGearData();
 		visionNetworkTable.showGearData();
+		SmartDashboard.putNumber("GM ACTUAL POSITION", Robot.gearManipulator.gearManipulatorPivot.getPosition());
+		
 		updateLedState();
 		//visionNetworkTable.getHighData();
 	}
@@ -244,6 +258,7 @@ public class Robot extends IterativeRobot {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		Robot.numToSend = 3;
 	}
 
 	/**
@@ -256,9 +271,13 @@ public class Robot extends IterativeRobot {
 		isTeleoperated = true;
 		isEnabled = true;
 		updateLedState();
-		SmartDashboard.putNumber("Gyrooo", Robot.drivebase.driveGyro.getAngle());
+		//SmartDashboard.putNumber("Gyro", Robot.drivebase.driveGyro.getAngle());
+		SmartDashboard.putNumber("Climber Current Motor 1", Robot.climber.climberTalon.getOutputCurrent());
+		SmartDashboard.putNumber("Climber Current motor 2", Robot.climber.climberTalon2.getOutputCurrent());
 		//visionNetworkTable.getGearData();
 	//	visionNetworkTable.showGearData();
+		SmartDashboard.putNumber("GM ACTUAL POSITION", Robot.gearManipulator.gearManipulatorPivot.getPosition());
+
 		if(Robot.debugging){			
 			SmartDashboard.putNumber("Shooter1RPM  Setpoint", shooter.shooter1.getSetpoint());
 	    	SmartDashboard.putNumber("Intake Pivot Encoder Position", Robot.gearManipulator.gearManipulatorPivot.getPosition());
@@ -281,50 +300,26 @@ public class Robot extends IterativeRobot {
 	}
 
 public void updateLedState(){
-	 if(PlaceGear.placingGear == true){
- 		if(DriverStation.getInstance().getAlliance() == Alliance.Blue){
- 			numToSend = 3;
- 		}
- 		if(DriverStation.getInstance().getAlliance() == Alliance.Red){
- 			numToSend = 4;
- 		}
- 		if(DriverStation.getInstance().getAlliance() == Alliance.Invalid){
- 			numToSend = 4;
- 		}
- 	}
- 	else if(Robot.gearManipulator.gearManipulatorPivot.getSetpoint() == RobotMap.INTAKE_PIVOT_GEARINTAKE_POSITION){
- 		numToSend = 5;
- 		
- 	}
- 	else if(Robot.gearManipulator.gearManipulatorPivot.getSetpoint() == RobotMap.INTAKE_PIVOT_BALLINTAKE_POSITION){
- 		numToSend = 6;
- 	}
- 	else if(Robot.climber.climberTalon.getOutputVoltage() != 0){
- 		numToSend = 7;
- 	}
- 	
- 	else if(Robot.shooter.shooter1.getSetpoint() != 0 && SetCycloneSpeed.cycloneOn){
- 		numToSend = 8;
- 	}
- 	else{
- 		if(DriverStation.getInstance().isEnabled()){
- 		 	if(Robot.gearManipulator.gearManipulatorPivot.getSetpoint() == RobotMap.INTAKE_PIVOT_VERTICAL_POSITION){
- 	    		if(DriverStation.getInstance().getAlliance() == Alliance.Blue){
- 	    			numToSend = 2;
- 	    		}
- 	    		if(DriverStation.getInstance().getAlliance() == Alliance.Red){
- 	    			numToSend = 1;
- 	    		}
- 	    		if(DriverStation.getInstance().getAlliance() == Alliance.Invalid){
- 	    			numToSend = 1;
- 	    		}
- 	    	}
- 		}
- 		if(DriverStation.getInstance().isDisabled()){
+	
+ 		if(!Robot.isEnabled){
  		numToSend = 0;
+
  		}
- 	}
-		Robot.leds.setMode(numToSend);
-		System.out.println("LED State " + numToSend);
+ 		if(Robot.isEnabled){
+ 			
+ 		
+ 		
+ 		SmartDashboard.putNumber("Gear Manip Setpoint", Robot.gearManipulator.gearManipulatorPivot.getSetpoint());
+ 		}
+		if(prevnumToSend != numToSend){
+			Robot.leds.setMode(numToSend);
+		//	System.out.println("LED State " + numToSend);
+			prevnumToSend = numToSend;
+		}
+
+	 }
+
+
+
 }
-}
+

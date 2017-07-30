@@ -49,18 +49,15 @@ public class DriveTankDefault extends Command {
 			else{
 				deadbandfwdback = Robot.oi.driverGamepad.getLeftStickY();
 			}
-			 lspd = deadbandfwdback+deadbandrotation;
+			lspd = deadbandfwdback+deadbandrotation;
 			rspd = deadbandfwdback-deadbandrotation;
 
-		if(Robot.oi.driverGamepad.getLeftBumper() == true){
-			
-        	Robot.drivebase.driveTank(0.5*rspd, 0.5*lspd);
-
-		}
-		
-		else{
-        	Robot.drivebase.driveTank(rspd, lspd);
-		}
+			if(Robot.oi.driverGamepad.getLeftBumper() == true){
+		    	Robot.drivebase.driveTank(0.5*rspd, 0.5*lspd);
+			}
+			else{
+		    	Robot.drivebase.driveTank(rspd, lspd);
+			}
 		}
 	}
 

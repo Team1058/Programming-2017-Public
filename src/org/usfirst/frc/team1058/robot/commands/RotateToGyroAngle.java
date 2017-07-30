@@ -47,8 +47,8 @@ boolean isOnTarget;
     	}
     	
     	
-    	Robot.drivebase.driveTank(desiredDriveOutput/40, -desiredDriveOutput/40);
-    	if(angleDifferential == 0){
+    	Robot.drivebase.driveTank(-desiredDriveOutput/60, desiredDriveOutput/60);
+    	if(angleDifferential < 1 && angleDifferential > -1){
     		isOnTarget = true;
     	}
     	SmartDashboard.putNumber("Desired Drive Output" , desiredDriveOutput);

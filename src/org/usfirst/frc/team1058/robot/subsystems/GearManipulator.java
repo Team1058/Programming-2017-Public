@@ -18,10 +18,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class GearManipulator extends Subsystem {
 	public Solenoid gearSolenoid = new Solenoid(RobotMap.GEAR_MANIPULATOR_SOLENOID);
 	public CANTalon gearManipulatorPivot = new CANTalon(RobotMap.GEAR_MANIPULATOR_PIVOT_TALON_ID);
-	public Talon gearManipulatorRoller = new Talon(RobotMap.GEAR_MANIPULATOR_ROLLER_VICTOR_ID);
-	double kP = 1;
-	double kI = 0.05;
-	double kD = 0;
+	public CANTalon gearManipulatorRoller = new CANTalon(RobotMap.CYCLONE_TALON_ID);
+	double kP = 2;
+	double kI = 0;
+	double kD = 0.001;
+
 	boolean ledState = false;
 	boolean timesRun = false;
 
@@ -32,7 +33,7 @@ public class GearManipulator extends Subsystem {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     	initializePivotMotors(true);
-    	setDefaultCommand(new PivotJoystickPID(RobotMap.INTAKE_PIVOT_VERTICAL_POSITION, 6));
+    	setDefaultCommand(new PivotJoystickPID(RobotMap.INTAKE_PIVOT_VERTICAL_POSITION, 10));
     }
     
     public void setRollerSpeed(double speed){

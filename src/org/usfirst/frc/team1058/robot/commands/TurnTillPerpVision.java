@@ -42,9 +42,9 @@ public class TurnTillPerpVision extends Command {
     			Robot.drivebase.driveTank(.1, -.1);
     		}
     	}*/
-    	if (Robot.visionNetworkTable.gearDistanceInches > 15){
-    		mod = Robot.visionNetworkTable.gearDistanceFromCenter*.00005*(Robot.visionNetworkTable.gearDistanceInches);	
-    		Robot.drivebase.driveTank(-.2+mod, -.2-mod);
+    	if (Robot.visionNetworkTable.gearDistanceInches > 10){
+    		mod = Robot.visionNetworkTable.gearDistanceFromCenter*.005;	
+    		//Robot.drivebase.driveTank(-.2+mod, -.2-mod);
     	}
     	
        	if (Robot.visionNetworkTable.gearDistanceInches <= 15){

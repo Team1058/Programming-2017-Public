@@ -21,6 +21,10 @@ public static boolean done, cycloneOn;
     // Called just before this Command runs the first time
     protected void initialize() {
     	done = false;
+    	if(kspeed != 0){
+        	Robot.numToSend = 8;
+
+    	}
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -51,6 +55,7 @@ public static boolean done, cycloneOn;
     protected void end() {
     	Robot.cyclone.setCycloneSpeed(0);
 		cycloneOn = false;
+		Robot.numToSend = 3;
 
     }
 
@@ -59,6 +64,7 @@ public static boolean done, cycloneOn;
     protected void interrupted() {
     	Robot.cyclone.setCycloneSpeed(0);
 		cycloneOn = false;
+		Robot.numToSend = 3;
 
     }
 }

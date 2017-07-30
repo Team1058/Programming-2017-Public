@@ -1,11 +1,9 @@
 package org.usfirst.frc.team1058.robot;
 
-import org.usfirst.frc.team1058.robot.commands.BoilerAuto;
-import org.usfirst.frc.team1058.robot.commands.CameraLookForward;
 import org.usfirst.frc.team1058.robot.commands.DriveAndPivotGearRoller;
 import org.usfirst.frc.team1058.robot.commands.DriveGearPivot;
 import org.usfirst.frc.team1058.robot.commands.DriveGearRoller;
-import org.usfirst.frc.team1058.robot.commands.DrivebaseVisionTracking;
+import org.usfirst.frc.team1058.robot.commands.FlashlightOn;
 import org.usfirst.frc.team1058.robot.commands.LightLEDRings;
 import org.usfirst.frc.team1058.robot.commands.ManualClimberDrive;
 import org.usfirst.frc.team1058.robot.commands.PlaceGear;
@@ -36,14 +34,14 @@ public class OI {
 	public OI(){
 	 new JoystickButton(driverGamepad, 7).whenPressed(new LightLEDRings("gearmanipulator"));
 	 new JoystickButton(operatorGamepad, 3).whileHeld(new ManualClimberDrive(-1));
-	 new JoystickButton(operatorGamepad, 2).whileHeld(new ManualClimberDrive(-0.45));
+	 new JoystickButton(operatorGamepad, 2).whileHeld(new ManualClimberDrive(-0.35));
 	 new JoystickButton(operatorGamepad, 4).whenPressed(new PlaceGear(false, false));
 	 new JoystickButton(operatorGamepad, 6).toggleWhenPressed(new SetShooterRPM(RobotMap.BOILER_EDGE_SHOOTER_RPM));
 	 new JoystickButton(operatorGamepad, 5).whileHeld(new SetCycloneSpeed(-0.4, 0.4));
 	 new JoystickButton(operatorGamepad, 9).whileHeld(new SetCycloneSpeed(-1, 0.4));
-
+	 new JoystickButton(operatorGamepad,10).toggleWhenPressed(new FlashlightOn());
 	 new GamepadTrigger(operatorGamepad, "left").whenPressed(new DriveGearPivot(RobotMap.INTAKE_PIVOT_VERTICAL_POSITION, 8));
-	 new JoystickButton(operatorGamepad, 1).whileHeld(new DriveGearRoller(-0.5));
+	 new JoystickButton(operatorGamepad, 1).whileHeld(new DriveGearRoller(-0.8));
 	 new JoystickButton(operatorGamepad, 7).whenPressed(new ZeroGearManipEncoders());
 	 new GetDPad(operatorGamepad, 270).whileActive(new DriveAndPivotGearRoller(
 			 1,RobotMap.INTAKE_PIVOT_GEARINTAKE_POSITION));

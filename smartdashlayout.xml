@@ -1,79 +1,46 @@
 <xml version="1.0">
 <dashboard>
 	<widget field="rect2Area" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="0" y="642"/>
+		<location x="0" y="183"/>
 	</widget>
 	<widget field="rect1Area" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="0" y="621"/>
+		<location x="0" y="162"/>
 	</widget>
 	<widget field="matNum" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="0" y="600"/>
+		<location x="0" y="141"/>
 	</widget>
 	<widget field="distanceInches " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="0" y="579"/>
-	</widget>
-	<widget field="distanceFromCenter " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="0" y="558"/>
-	</widget>
-	<widget field="diffArea " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="0" y="537"/>
-	</widget>
-	<widget field="Intake Pivot Encoder Position" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="0" y="516"/>
-	</widget>
-	<widget field="Gyro" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="0" y="495"/>
-	</widget>
-	<widget field="Gear Manipulator Setpoint" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="0" y="474"/>
-	</widget>
-	<widget field="Gyrooo" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="0" y="453"/>
-	</widget>
-	<widget field="cyclone speed" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="0" y="432"/>
-	</widget>
-	<widget field="Shooter2RPM  Setpoint" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="0" y="411"/>
-	</widget>
-	<widget field="Desired Speed" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="0" y="390"/>
-	</widget>
-	<widget field="RPM - Shooter 2" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="0" y="369"/>
-	</widget>
-	<widget field="RPM - Shooter 1" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="0" y="348"/>
-	</widget>
-	<widget field="Right Encoder Output" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="0" y="327"/>
-	</widget>
-	<widget field="Desired Drive Output" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="0" y="306"/>
-	</widget>
-	<widget field="Left Encoder Output" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="0" y="285"/>
-	</widget>
-	<widget field="Shooter1RPM  Setpoint" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="0" y="264"/>
-	</widget>
-	<widget field="DriveBase Voltage Output" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="0" y="165"/>
-	</widget>
-	<widget field="MAX OUTPUT DESIRED" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="0" y="144"/>
-	</widget>
-	<widget field="Voltage - Shooter 2" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="0" y="63"/>
 	</widget>
-	<widget field="Voltage - Shooter 1" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+	<widget field="distanceFromCenter " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="0" y="42"/>
 	</widget>
-	<widget field="PUSHING CHOOSER" type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+	<widget field="diffArea " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="0" y="21"/>
 	</widget>
-	<widget field="GyroDesiredAngle" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+	<widget field="Gyro" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="0" y="0"/>
+	</widget>
+	<widget field="Climber Current motor 2" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="234" y="405"/>
+	</widget>
+	<widget field="Climber Current Motor 1" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="220" y="328"/>
+	</widget>
+	<widget field="GM ACTUAL POSITION" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="22" y="398"/>
+	</widget>
+	<widget field="Calibrate Gyro - WHILE ROBOT NOT MOVING" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="95" y="419"/>
+	</widget>
+	<widget field="Zero Gyro" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="274" y="369"/>
+	</widget>
+	<widget field="Desired Drive Output" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="219" y="353"/>
+	</widget>
+	<widget field="Gear Manip Setpoint" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="30" y="374"/>
 	</widget>
 	<widget field=" " type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.BooleanBox">
 		<location x="492" y="151"/>
@@ -94,17 +61,17 @@
 		<property name="Connection Color" value="0.204.51.255"/>
 	</static-widget>
 	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.CameraServerViewer">
-		<location x="829" y="92"/>
-		<width>520</width>
-		<height>432</height>
+		<location x="859" y="115"/>
+		<width>472</width>
+		<height>333</height>
 		<property name="Camera Choice" value=""/>
 	</static-widget>
 	<widget field="Auto Chooser" type="String Chooser" class="edu.wpi.first.smartdashboard.gui.elements.Chooser">
-		<location x="21" y="101"/>
+		<location x="20" y="100"/>
 		<property name="Use Radio Buttons" value="false"/>
 	</widget>
 	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.Image">
-		<location x="0" y="0"/>
+		<location x="-2" y="-1"/>
 		<property name="Image File" value="C:\Users\1058\Documents\Programming-2017\FRC 1058 DS drawing (3).png"/>
 		<property name="Maintain Aspect Ratio" value="true"/>
 	</static-widget>

@@ -41,7 +41,7 @@ public class DriveTimedTank extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
   
-    		Robot.drivebase.driveTank(leftDriveSpeed-Robot.drivebase.driveGyro.getAngle()/30, rightDriveSpeed+Robot.drivebase.driveGyro.getAngle()/30);
+    		Robot.drivebase.driveTank(leftDriveSpeed, rightDriveSpeed);
     	
     }
 

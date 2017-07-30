@@ -4,6 +4,7 @@ import org.usfirst.frc.team1058.robot.Robot;
 import org.usfirst.frc.team1058.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.command.WaitCommand;
 
 /**
  *
@@ -22,7 +23,7 @@ public static boolean placingGear;
         //      addSequential(new Command2());
         // Command1 and Command2 will run in parallel.
     	
-    	addSequential(new DriveGearPivot(-10581058, 6));
+    	addSequential(new DriveGearPivot(-10581058, 10));
     	addSequential(new DriveAndPivotGearRoller(-0.4, RobotMap.INTAKE_PIVOT_GEARINTAKE_POSITION-400), 2);
     	addSequential(new DriveGearPivot(RobotMap.INTAKE_PIVOT_GEARINTAKE_POSITION-400,4));
     	

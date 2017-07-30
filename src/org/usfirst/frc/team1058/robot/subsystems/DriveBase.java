@@ -18,7 +18,7 @@ public class DriveBase extends Subsystem {
 	// here. Call these from Commands.
 		int dtControlMode;
 		public AnalogGyro driveGyro = new AnalogGyro(0);
-		
+		public Solenoid flashlight = new Solenoid(4);
 		//Create the Talon objects
 		public com.ctre.CANTalon leftDrive1 = new com.ctre.CANTalon(RobotMap.LEFT_DRIVE_1_TALON_ID);
 		com.ctre.CANTalon leftDrive2 = new com.ctre.CANTalon(RobotMap.LEFT_DRIVE_2_TALON_ID);
@@ -54,6 +54,10 @@ public class DriveBase extends Subsystem {
 		}
 		
 		if(dtControlMode == 1){
+			leftDrive1.enableBrakeMode(true);
+			leftDrive2.enableBrakeMode(true);
+			rightDrive1.enableBrakeMode(true);
+			rightDrive2.enableBrakeMode(true);
 			leftDrive1.setSafetyEnabled(false);
 			leftDrive2.setSafetyEnabled(false);
 			rightDrive1.setSafetyEnabled(false);
@@ -185,5 +189,12 @@ public class DriveBase extends Subsystem {
 		rightDrive1.configMaxOutputVoltage(voltage);
 
 	}
+	public void resetGyro(){
+		driveGyro.reset();
+	}
+	public void calibrateGyro(){
+		driveGyro.calibrate();
+	}
+	
 
 }

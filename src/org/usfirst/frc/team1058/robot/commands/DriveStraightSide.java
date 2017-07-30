@@ -8,9 +8,9 @@ import edu.wpi.first.wpilibj.command.WaitCommand;
 /**
  *
  */
-public class DriveStraightCenter extends CommandGroup {
+public class DriveStraightSide extends CommandGroup {
 
-    public DriveStraightCenter() {
+    public DriveStraightSide(boolean turnAfter, boolean leftTurnAfter) {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
@@ -31,15 +31,34 @@ public class DriveStraightCenter extends CommandGroup {
     	addParallel(new PrepareGearManipulator());
     	addSequential(new WaitCommand(3.5));
     	addParallel(new DriveGearPivot(RobotMap.INTAKE_PIVOT_VERTICAL_POSITION, 6),1);
-    	addSequential(new DriveStraightPosition(6,3.5));
-    	addSequential(new WaitCommand(0.5));
-    	addSequential(new PlaceGear(false,false), 0.5);
+    	addSequential(new DriveStraightPosition(5.8,3),5);
+    	if(!leftTurnAfter){
+        	addSequential(new RotateToGyroAngle(-50, 2),2);
+
+    	}
+    	else{
+        	addSequential(new RotateToGyroAngle(50, 2),2);
+
+    	}
+    	addSequential(new DriveTimedTank(-0.3,-0.3, 1.6));
+    	addSequential(new WaitCommand(0.1));
+    	addSequential(new PlaceGear(false,false), 1);
     	addSequential(new DriveGearPivot(RobotMap.INTAKE_PIVOT_GEARINTAKE_POSITION-400, 6), 0.5);
-    	addSequential(new DriveStraightPosition(4.2,-2));
-    	addSequential(new DriveGearPivot(RobotMap.INTAKE_PIVOT_VERTICAL_POSITION, 6),.5);
-    	
-    	
+    	addParallel(new DriveGearRoller(0.7),2);
+    	addSequential(new DriveTimedTank(0.5,0.5,0.5));
+    	addSequential(new DriveGearPivot(RobotMap.INTAKE_PIVOT_VERTICAL_POSITION, 6), 0.5);
+    	if(turnAfter){
+    		if(!leftTurnAfter){
+    			addSequential(new RotateToGyroAngle(0,2), 1);
+    		}
+    		else{
+    			
+    			addSequential(new RotateToGyroAngle(0,2),1);
+    		}
+    		addSequential(new DriveStraightPosition(20,6));
+    	}
 
 
+    	
     }
 }

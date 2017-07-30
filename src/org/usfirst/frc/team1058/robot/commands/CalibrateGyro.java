@@ -12,21 +12,23 @@ public class CalibrateGyro extends Command {
     public CalibrateGyro() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	
+    	setTimeout(4);
+    	requires(Robot.drivebase);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.drivebase.driveGyro.calibrate();
+    	Robot.drivebase.calibrateGyro();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return true;
+        return isTimedOut();
     }
 
     // Called once after isFinished returns true

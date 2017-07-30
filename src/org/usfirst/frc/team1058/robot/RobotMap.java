@@ -47,15 +47,16 @@ public class RobotMap {
 	
 	public static final double INTAKE_PIVOT_ENCODER_TOLERANCE = 50;
 	public static final double INTAKE_PIVOT_STOW_POSITION = 0;
-	public static final double INTAKE_PIVOT_VERTICAL_POSITION = 1600;
-	public static final double INTAKE_PIVOT_GEARINTAKE_POSITION = 3795;
+	public static final double INTAKE_PIVOT_VERTICAL_POSITION = 1800; //1750 for normal position, 1950 for home peg
+	public static final double INTAKE_PIVOT_GEARINTAKE_POSITION = 3750;
 	public static final double INTAKE_PIVOT_BALLINTAKE_POSITION = 982;
-	// If you are using multiple modules, make sure to define both the port
+	//  you are using multiple modules, make sure to define both the port
 	// number and the module. For example you with a rangefinder:
 	// public static int rangefinderPort = 1;
 	// public static int rangefinderModule = 1;
 	
 	//GAMEPAD PORTS
+	
 	
 	public static final int xButton = 3;
 	public static final int aButton = 1;

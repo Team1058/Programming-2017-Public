@@ -20,6 +20,11 @@ boolean done, ledstatus;
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	if(!SetCycloneSpeed.cycloneOn){
+    		if(k_rpm != 0){
+    		Robot.numToSend = 9;
+    		}
+    	}
     	if(Robot.debugging){
     	SmartDashboard.putNumber("Desired Speed", 0);
     	}
@@ -50,7 +55,7 @@ boolean done, ledstatus;
     		ledstatus = false;
     	}
     	Robot.drivebase.shooterledring.set(ledstatus);
-    	System.out.println(Robot.shooter.shooter1.getSpeed());
+   // 	System.out.println(Robot.shooter.shooter1.getSpeed());
     }
 
     
@@ -62,12 +67,13 @@ boolean done, ledstatus;
     // Called once after isFinished returns true
     protected void end() {
     	Robot.shooter.setShooterSpeed(0);
-
+    	Robot.numToSend = 3; 
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
     	Robot.shooter.setShooterSpeed(0);
+    	Robot.numToSend = 3;
     }
 }

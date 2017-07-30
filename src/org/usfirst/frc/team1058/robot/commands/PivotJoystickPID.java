@@ -23,7 +23,6 @@ static boolean justInitialized;
     protected void initialize() {
     	if(justInitialized == false){
         	Robot.gearManipulator.setIntakePosition(k_initialsetpoint);
-
     	}
     	Robot.gearManipulator.setIntakeMaxSpeed(k_maxvoltage);
 

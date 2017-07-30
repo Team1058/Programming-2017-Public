@@ -21,6 +21,12 @@ boolean done;
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	if(kIntakeSetpoint == RobotMap.INTAKE_PIVOT_GEARINTAKE_POSITION){
+    		Robot.numToSend = 5;
+    	}
+    	if(kIntakeSetpoint == RobotMap.INTAKE_PIVOT_BALLINTAKE_POSITION){
+    		Robot.numToSend = 6;
+    	}
     	done = false;
     	Robot.gearManipulator.setIntakePosition(kIntakeSetpoint);
     }
@@ -44,7 +50,7 @@ boolean done;
     protected void end() {
     	Robot.gearManipulator.setIntakePosition(RobotMap.INTAKE_PIVOT_VERTICAL_POSITION);
     	Robot.gearManipulator.setRollerSpeed(0);
-    	
+    	Robot.numToSend = 3;
     }
 
     // Called when another command which requires one or more of the same
@@ -53,5 +59,6 @@ boolean done;
     	Robot.gearManipulator.setRollerSpeed(0);
     	Robot.gearManipulator.setIntakePosition(RobotMap.INTAKE_PIVOT_VERTICAL_POSITION);
     	done = true;
+    	Robot.numToSend = 3;
     }
 }
